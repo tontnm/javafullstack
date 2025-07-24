@@ -1,6 +1,6 @@
 package week10nullreferencevariable;
 
-import downupcasting.SinhVien;
+import week09downupcasting.SinhVien;
 
 public class Ex1 {
     static SinhVien sv1;
