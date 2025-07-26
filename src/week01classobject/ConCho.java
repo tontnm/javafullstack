@@ -1,32 +1,42 @@
 package week01classobject;
 
+import java.util.ArrayList;
+
 class ConCho {
-    private String ten;
-    private int tuoi;
+    public String ten;
+    public int tuoi;
 
-    public ConCho(String ten, int tuoi) {
-        this.ten = ten;
-        this.tuoi = tuoi;
+    public void tuToChucSinhNhat() {
+        System.out.println(ten + " đang tổ chức sinh nhật.");
+        tuoi++;
     }
 
-    public void showInfor() {
-        System.out.println("Tên: " + ten);
-        System.out.println("Tuổi: " + tuoi);
+    public void tuToChucSinhNhatConChoKhac(ConCho cc) {
+        System.out.println(ten + " đang tổ chức sinh nhật con chó khác.");
+        cc.tuoi++;
     }
 
-    public String getTen() {
-        return ten;
+    public void anXuong(CucXuong xuong) {
+        System.out.println(ten + " đang ăn xương " + xuong.ten + " có khối lượng " + xuong.khoiLuong);
     }
 
-    public void setTen(String ten) {
-        this.ten = ten;
+    public void anNhieuXuong(ArrayList<CucXuong> xuongs) {
+        for (CucXuong xuong : xuongs) {
+            System.out.println(ten + " đang ăn xương " + xuong.ten + " có khối lượng " + xuong.khoiLuong);
+        }
     }
 
-    public int getTuoi() {
-        return tuoi;
+    public Shit anXuong2(CucXuong xuong) {
+        System.out.println(ten + " đang ăn xương " + xuong.ten + " có khối lượng " + xuong.khoiLuong);
+        System.out.println("thải ra 1 shit");
+        return new Shit();
     }
 
-    public void setTuoi(int tuoi) {
-        this.tuoi = tuoi;
+    public ArrayList<Shit> anXuong3(CucXuong xuong) {
+        System.out.println(ten + " đang ăn xương " + xuong.ten + " có khối lượng " + xuong.khoiLuong);
+        System.out.println("thải ra nhiều shit");
+        ArrayList<Shit> shits = new ArrayList<>();
+        shits.add(new Shit());
+        return shits;
     }
 }

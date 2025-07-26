@@ -2,17 +2,18 @@ package week01classobject;
 
 public class Main {
 	public static void main(String[] args) {
-		int a = 1; // cấp cho a 1 vùng nhớ để lưu giá trị
-		int b = a; // cấp cho b 1 vùng nhớ, và copy giá trị của a để gán cho b
-		a = 2; // ghi đè lên ô nhớ hiện tại của biến a
-		System.out.println(a); // a = 2
-		System.out.println(b); // b = 1
+		ConCho conCho1 = new ConCho();
+		conCho1.ten = "Buddy";
+		conCho1.tuoi = 3;
+		conCho1.tuToChucSinhNhat();
+		System.out.println(conCho1.tuoi);
 
-		SinhVien sv1 = new SinhVien();
-		sv1.hoTen = "Sinh Vien 1";
-		SinhVien sv2 = sv1;
-		sv2.hoTen = "Sinh Vien 2";
-		System.out.println(sv1.hoTen); // Sinh Vien 2, tại vì cùng trỏ đến 1 vùng nhớ (1 object)
+		ConCho conCho2 = new ConCho();
+		conCho2.ten = "Max";
+		conCho2.tuoi = 5;
+		conCho1.tuToChucSinhNhatConChoKhac(conCho2);
+		System.out.println(conCho2.tuoi);
+
 	}
 }
 
@@ -38,8 +39,7 @@ public class Main {
  * Dựa vào class ta có thể sinh ra vô vàn các đối tượng. Mỗi đối
  * tượng là 1 đại diện (chính là) cho 1 con chó cụ thể.
  * 
- * Và ta nói đối tượng là thể hiện của 1 lớp. Thể hiện = cụ thể
- * hóa = hiện thực hóa (của class).
+ * Và ta nói đối tượng là thể hiện của 1 lớp. Thể hiện = cụ thể hóa = hiện thực hóa (của class).
  * Lớp: người ta gọi là khuôn mẫu để tạo ra các đối tượng.
  * Lớp: là 1 bảng mô tả (các thuộc tính và hành vi) của một tập hợp
  * các đối tượng (có thuộc tính và hành vi giống nhau)
@@ -68,4 +68,6 @@ public class Main {
  * Inner Class là khai báo 1 cái class nằm bên trong 1 class, inner class có thể
  * dùng từ khóa static
  * Anonymous Inner Class là class chỉ muốn dùng 1 lần rồi thôi
+ * 
+ * * no F(no), no F(yes), yes F(no), yes F(yes)
  */
