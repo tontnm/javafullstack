@@ -1,7 +1,9 @@
-import javaoop.week09updowncasting.*;
+package javaoop.week09updowncasting;
+
 import java.util.Scanner;
 
-public class App {
+public class Main {
+
     public static void main(String[] args) {
         // HocVien hocVien1 = new HocVien(); // ko có casting
         // HocVien hocVien2 = (SinhVien) hocVien1; // down trc, up sau, runtime error
@@ -105,3 +107,23 @@ public class App {
         System.out.println("Số lượng nhân viên quản lý: " + soLuongNVQuanLy);
     }
 }
+
+/**
+ * Upcasting giúp bạn lưu trữ nhiều loại đối tượng trong một danh sách chung
+ * Downcasting giúp bạn truy cập vào các hành vi đặc biệt của từng loại đối
+ * tượng.
+ * Miễn là khai báo có quan hệ cha-con, ông-cháu, thì cho phép compile
+ * khi run-time, thì nó mới xét đến bản chất thật sự của class mà biến tham
+ * chiếu đang trỏ tới và nó chỉ cho phép ép thật sự khi có quan hệ IS-A
+ * khai báo là HocVien nhưng bản chất (dùng new là bản chất) là SinhVien thì có
+ * thể ép đc vì có quan hệ IS-A
+ * khai báo là HocVien nhưng bản chất (dùng new là bản chất) là HocVien thì ko
+ * thể ép đc vì ko có quan hệ IS-A
+ * khi ép kiểu ngầm định thì java phải đảm bảo là việc ép kiểu phải xảy ra thành
+ * công thì mới cho biên dịch, cho nên khi ép kiểu
+ * ngầm định, nó chỉ cho phép ép từ class CON về class CHA cho chắc ăn
+ * còn khi ép kiểu tường minh, thì java nó chỉ xem thử các class có quan hệ trực
+ * hệ hay ko, chứ nó ko chắc chắn là sẽ chạy ko lỗi
+ * lúc đó, nó sẽ đẩy trách nhiệm của việc kiểm soát lỗi trong quá trình chạy
+ * (lỗi run-time), cho dev tự lo, tự kiểm soát
+ */
