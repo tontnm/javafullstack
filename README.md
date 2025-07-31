@@ -17,6 +17,17 @@ Meanwhile, the compiled output files will be generated in the `bin` folder by de
 
 The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
 
+## Java Core
+
+- JVM, JRE, JDK
+- Variable, Data Type, String, char
+- Operator:  + - * / % = == <= >= > < && || ! += -= /= *= ++ --
+- if elseif else, condition?true:false, switch case
+- Luật De Morgan, Value swapping
+- For, While, Do While, Nested Loop, Break, Continue
+- Accumulative Sum, Loop Counter, {} Counter
+- Fibonacci, Factorial, Sum, Even, Odd, Positive, Negative
+
 ## Java Object Oriented Programming
 
 - Class, Object
@@ -27,8 +38,9 @@ The `JAVA PROJECTS` view allows you to manage your dependencies. More details ca
 - Local Variable, Instance Variable, Static Variable, Reference Variable
 - Inheritance, Polymorphism
 - Abstract Class, Interface
-- Exception
+- Java Exception (checked, unchecked),  Developer Exception
 - Static, Final
-- Collections
+- Collections: List-ArrayList, Map-HashMap, Set-HashSet
 - Up Casting, Down Casting
 - null, NullPointerException
+- StringBuffer, StringBuilder
