@@ -26,21 +26,19 @@ The `JAVA PROJECTS` view allows you to manage your dependencies. More details ca
 - Luật De Morgan, Value swapping
 - For, While, Do While, Nested Loop, Break, Continue
 - Accumulative Sum, Loop Counter, {} Counter
-- Fibonacci, Factorial, Sum, Even, Odd, Positive, Negative
+- Fibonacci, Factorial, Sum, Even, Odd, Positive, Negative, Digit, GCD, LCM
 
 ## Java Object Oriented Programming
 
 - Class, Object
 - Access Modifier
 - Method Overriding, Method Overloading
-- this, super, this(), super()
-- Constructor
+- this, super, this(), super(), Constructor
 - Local Variable, Instance Variable, Static Variable, Reference Variable
-- Inheritance, Polymorphism
-- Abstract Class, Interface
-- Java Exception (checked, unchecked),  Developer Exception
-- Static, Final
-- Collections: List-ArrayList, Map-HashMap, Set-HashSet
+- Inheritance, Polymorphism, Abstract Class, Interface
+- Static, Final, Try Catch Finally
 - Up Casting, Down Casting
 - null, NullPointerException
 - StringBuffer, StringBuilder
+- Collections: List-ArrayList, Map-HashMap, Set-HashSet
+- Java Exception (checked, unchecked),  Developer Exception
