@@ -27,6 +27,7 @@ The `JAVA PROJECTS` view allows you to manage your dependencies. More details ca
 - For, While, Do While, Nested Loop, Break, Continue
 - Accumulative Sum, Loop Counter, {} Counter
 - Fibonacci, Factorial, Sum, Even, Odd, Positive, Negative, Digit, GCD, LCM
+- ▮ ▯ C U ◣ ◤ ◢ ◥ ◸ ▲ ▼ Z 
 
 ## Java Object Oriented Programming
 
