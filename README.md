@@ -26,7 +26,7 @@ Welcome to the VS Code Java world. Here is a guideline to help you get started t
 - Static, Final, Try Catch Finally
 - Up Casting, Down Casting
 - null, NullPointerException
-- StringBuffer, StringBuilder
+- String, StringBuffer, StringBuilder
 - Collections: List-ArrayList, Map-HashMap, Set-HashSet
 - Java Exception (checked, unchecked), Developer Exception
 - Wrapper Class, Boxing vs Unboxing vs Autoboxing
