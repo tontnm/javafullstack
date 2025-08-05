@@ -23,7 +23,7 @@ public class Main {
         ii++;
         System.out.println(ii);
 
-        String y = "123a";
+        String y = "1234a";
         int result = convert(y);
         result++;
         System.out.println(result);
@@ -42,6 +42,8 @@ public class Main {
             // chạy, nếu có dòng này thì chỉ finally thật chạy
             return 0; // nếu ko có dòng này, thì 2 dòng finally đều chạy, nếu có dòng này thì chỉ
                       // finally thật chạy
+        } catch (NullPointerException e) {
+            System.out.println(e.getMessage());
         } finally {
             System.out.println("Finally Thật");
         }

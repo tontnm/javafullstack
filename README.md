@@ -28,6 +28,6 @@ Welcome to the VS Code Java world. Here is a guideline to help you get started t
 - null, NullPointerException
 - String, StringBuffer, StringBuilder
 - Collections: List-ArrayList, Map-HashMap, Set-HashSet
-- Java Exception (checked, unchecked), Developer Exception
+- Exception (checked, unchecked), Custom Exception, throws, throw , stack trace
 - Wrapper Class, Boxing vs Unboxing vs Autoboxing
-- Date, Time
+- Date, Time, Pass by Value, Pass by Reference
