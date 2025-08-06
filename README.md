@@ -14,6 +14,11 @@ Welcome to the VS Code Java world. Here is a guideline to help you get started t
 - Fibonacci, Factorial, Sum, Even, Odd, Positive, Negative, Digit, GCD, LCM
 - ▮ ▯ C U ◣ ◤ ◢ ◥ ◸ ▲ ▼ Z 
 - Main, Function, Return, Debug
+- String -> (int, double...) , (int, double...) -> String
+- 1D Array, 2D Array, Sentinel, Flag, Random, Flowchart
+- Big-O: O(1), O(log n), O(n), O(n log n), O(n^2), O(2^n) 
+- Sort: Bubble Sort, Selection Sort, Insertion Sort, Merge Sort, Quick Sort
+- 300, File, Validate Data (Exception), Regex, i++, ++i
 
 ## Java Object Oriented Programming
 
