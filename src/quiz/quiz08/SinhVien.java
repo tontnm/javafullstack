@@ -1,4 +1,4 @@
-package javaoop.quiz08;
+package quiz.quiz08;
 
 public class SinhVien {
     private String hoTen;

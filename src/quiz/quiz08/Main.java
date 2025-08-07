@@ -1,4 +1,4 @@
-package javaoop.quiz08;
+package quiz.quiz08;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

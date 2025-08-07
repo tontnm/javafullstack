@@ -1,4 +1,4 @@
-package javaoop.quiz06;
+package quiz.quiz06;
 
 public class A {
     void m(A a) {
