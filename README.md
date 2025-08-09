@@ -36,3 +36,9 @@ Welcome to the VS Code Java world. Here is a guideline to help you get started t
 - Exception (checked, unchecked), Custom Exception, throws, throw , stack trace
 - Wrapper Class, Boxing vs Unboxing vs Autoboxing
 - Date, Time, Pass by Value, Pass by Reference
+
+## Database
+
+- Relational Database, NoSQL Database
+- ERD (Entity-Relationship Diagram): Entity, Attribute, Relationship, Data
+- 6 Steps from ERD to DB
