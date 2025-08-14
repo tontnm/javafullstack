@@ -1,7 +1,7 @@
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # = = DECIMAL - DATE - ENUM
-# = = CONCAT() � LEFT() � Mathematical Operators
+# = = CONCAT() � LEFT() � Mathematical Operators
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
 USE db_samples1;
@@ -16,8 +16,26 @@ CREATE TABLE employees(
 	salary		DECIMAL(9,2)	NOT NULL
 );
 
+/*
+Giải thích cột & kiểu dữ liệu:
+- emp_no: số nguyên, tự tăng (AUTO_INCREMENT), khóa chính (PRIMARY KEY).
+- birth_date: kiểu ngày (YYYY-MM-DD).
+- first_name, last_name: chuỗi ký tự có giới hạn độ dài.
+- gender: giá trị cố định 'M' hoặc 'F' nhờ kiểu ENUM.
+- hire_date: ngày được tuyển.
+- salary: số thập phân với tối đa 9 chữ số, 2 chữ số sau dấu phẩy.
+📌 DECIMAL(9,2) thích hợp cho tiền lương vì tránh lỗi làm tròn của số thực
+
+*/
+
 SHOW TABLES; 
 DESCRIBE employees;
+
+/*
+- SHOW TABLES: liệt kê các bảng trong db_samples1.
+- DESCRIBE employees: liệt kê cột, kiểu dữ liệu, khóa, giá trị mặc định...
+
+*/
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 INSERT INTO employees (birth_date, first_name, last_name, gender, hire_date, salary)
@@ -90,20 +108,28 @@ INSERT INTO employees (birth_date, first_name, last_name, gender, hire_date, sal
 VALUES ('1986-03-19', 'Jad', 'Hunt', 'M', '2006-04-24', 81000.61);
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+--Lấy toàn bộ dữ liệu của bảng employees.
 SELECT * FROM employees;
 
+--Lọc các nhân viên có first_name đúng là Maria.
+--MySQL mặc định không phân biệt hoa/thường với chuỗi khi so sánh
 SELECT * FROM employees WHERE first_name='Maria';
 SELECT * FROM employees WHERE first_name='MAriA';
 
+--Lọc các nhân viên có họ là Ballard.
 SELECT * FROM employees WHERE last_name='Ballard';
 
+--Lấy nhân viên họ Ballard và giới tính F.
 SELECT * FROM employees 
 WHERE last_name='Ballard' AND gender='F';
 
+--Lấy các nhân viên sinh ngày 1980-03-28.
 SELECT * FROM employees 
 WHERE birth_date='1980-03-28';
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+--Hiển thị emp_no dưới tên mới là id, và ghép first_name + khoảng trắng + last_name 
+--thành cột name.
 SELECT emp_no AS id , 
 	CONCAT(first_name, ' ', last_name) AS name 
 FROM employees;
@@ -122,19 +148,33 @@ FROM employees;
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SELECT 9+2, 9-2, 9*2, 9/2, 9 DIV 2, 9%2;
 
+/*
+Thực hiện các phép toán số học:
+- + cộng, - trừ, * nhân, / chia thực,
+- DIV chia lấy nguyên,
+- % lấy phần dư.
+*/
+
 SELECT emp_no, salary, 
 salary * 10 AS mult,
 salary / 10 AS div1,
 salary DIV 10 AS div2,
 salary % 10 AS modulo   
 FROM employees;
+/*
+Thực hiện phép tính trực tiếp trên cột salary và hiển thị thêm các kết quả:
+- nhân 10, chia thực 10, chia nguyên 10, lấy dư khi chia 10.
+
+*/
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 SELECT first_name, last_name, 
 LEFT(first_name,1), LEFT(last_name,1) 
 FROM employees;
+-- Lấy ký tự đầu tiên của first_name và last_name.
 
 # Exercise: display employees first_name, last_name, and initials
 SELECT first_name, last_name, 
 CONCAT(LEFT(first_name,1), LEFT(last_name,1)) AS Initials 
 FROM employees;
+--Tạo cột Initials (chữ cái đầu của tên và họ), ví dụ: Maria Flowers → MF.
