@@ -1,4 +1,7 @@
-﻿select * from GIAOVIEN;
+﻿select * from HOCSINH
+where (DiemToan >= 8 AND GioiTinh = 'Nu') OR (DiemToan <= 5 AND DiaChi = 'Duong X');
+
+select * from GIAOVIEN;
 select * from MONHOC;
 select * from LOP;
 select * from HOCSINH;

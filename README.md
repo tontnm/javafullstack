@@ -42,3 +42,6 @@ Welcome to the VS Code Java world. Here is a guideline to help you get started t
 - Relational Database, NoSQL Database
 - ERD (Entity-Relationship Diagram): Entity, Attribute, Relationship, Data
 - 6 Steps from ERD to DB
+- SELECT - WHERE - NULL (IS NULL, IS NOT NULL) - EMPTY STRING - Calculated Columns
+- AND, OR, >=, <=, ALIAS
+- SELECT - LIKE - % - [^3A] - DISTINCT
