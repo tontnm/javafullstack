@@ -25,6 +25,10 @@ SELECT name, area FROM cities WHERE area > 2000;
 -- get all cities -> filter -> delete unselect columns -> show columns
 
 -- =, >, <, >=, <=, <>, !=, BETWEEN, NOT IN, IN (mấy cái này dùng cho WHERE)
+SELECT name, area FROM cities WHERE area BETWEEN 1000 AND 3000;
+SELECT name, area FROM cities WHERE area IN (1111, 2222);
+SELECT name, area FROM cities WHERE name NOT IN ('Delhi', 'HCM');
+SELECT name, area FROM cities WHERE area NOT IN (1111, 2222) AND population > 1000000;
 
 -- calculations in where clauses
 SELECT name, population / area AS population_density FROM cities
@@ -44,12 +48,16 @@ DELETE FROM cities WHERE name = 'Tokyo';
  * Database Design
  * - If that feature already exist, search on google for SQL Schema for Like or Upvote System
  * - If not exist on google, try to look at the mock up, UI, relationships
+ * - Database For A Photo-Sharing App: 
+ * - users(1) - photos(n), users(1) - comments(n), users(1) - likes(n)
+ * - photos(1) - comments(n), photos(1) - likes(n)
  * - user has many photos (one-many), (boat -> crew members, school -> students, company -> employees)
  * - a photo (has/belong to) a user (many-one)
  * - a photo has many comments (one-many)
  * - a comment (has/belong to) a photo (many-one)
+ ! - the 'many' side of the relationship gets the foreign key column
  *
- * trong quan hệ 1-n: bên n sẽ lấy                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      foreign key
+ * trong quan hệ 1-n: 1(pk)-n(pk+fk)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      foreign key
  *
  * - driver license - me (1-1) (boats-captains,company-ceo,capitol-country,student-desk,person-driver's license)
  * 
