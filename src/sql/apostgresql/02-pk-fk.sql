@@ -5,11 +5,11 @@
  * - insert a photo with a user is NULL - ok
  * 
  * Delete Foreign Key types
- * - Restrict 
- * - No Action
- * - Cascade - Ex: forum post and comments
- * - Set NULL - Ex: useful post - ban user
- * - Set Default
+ * - On Delete Restrict -> throw an error
+ * - On Delete No Action -> throw an error
+ * - On Delete Cascade - Ex: forum post and comments
+ * - On Delete Set NULL - Ex: useful post - ban user
+ * - On Delete Set Default
  * */
 CREATE TABLE photos(
 	id serial PRIMARY KEY,
