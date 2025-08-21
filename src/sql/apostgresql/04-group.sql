@@ -61,3 +61,12 @@ SELECT manufacturer, SUM(price*units_sold)
 FROM phones
 GROUP BY manufacturer
 HAVING SUM(price*units_sold) > 1000000;
+
+--*Exercise on large dataset
+SELECT paid, COUNT(*)
+FROM orders
+GROUP BY paid;
+
+SELECT first_name, last_name, paid
+FROM users
+JOIN orders ON users.id = orders.user_id;
