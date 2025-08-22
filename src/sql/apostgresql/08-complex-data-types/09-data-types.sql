@@ -9,6 +9,9 @@
  * - bank balance, grams of golds, scientic calculations = numeric
  * - kg of trash, liters of water, air pressure = double precision
  */
+SELECT 2+2;
+SELECT (2); --integer
+SELECT (2.0); --numeric
 SELECT 1.0::INTEGER;
 SELECT 9.999999::NUMERIC - 9.999998::NUMERIC; --0.000001
 
