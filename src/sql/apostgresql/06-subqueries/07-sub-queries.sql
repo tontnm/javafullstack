@@ -1,3 +1,13 @@
+/*
+* tìm sản phẩm mắc hơn sản phẩm mắc nhất của bộ phận Toys
+* nếu nhìn bằng mắt thường thì ta thấy bộ phận Toys có giá mắc nhất là 876
+* viết câu query đơn giản trước
+*/
+SELECT * FROM products WHERE price > 876;
+SELECT name, price FROM products WHERE price > (
+	SELECT max(price) FROM products WHERE department = 'Toys'
+);
+
 /* Sub-queries
  * - It can place to 4 places: 
  * -	select(a value), - 2nd popular
@@ -46,10 +56,38 @@ WHERE p1.price = (
 	SELECT max(price) FROM products AS p2 WHERE p2.department = p1.department
 );
 
-/* Select without a From */
+/* Select without a From - Chỉ trả về 1 giá trị */
+SELECT (
+	SELECT max(price) FROM products
+) / (
+	SELECT min(price) FROM products
+);
+
 SELECT (
 	SELECT max(price) FROM products
 ), (
 	SELECT avg(price) FROM products
 );
 
+SELECT
+ (SELECT MAX(price) FROM phones) AS max_price,
+ (SELECT MIN(price) FROM phones) AS min_price,
+ (SELECT AVG(price) FROM phones) AS avg_price;
+
+SELECT first_name
+FROM users
+JOIN (
+	SELECT user_id FROM orders product_id = 3
+) AS o ON o.user_id = users.id;
+
+SELECT id
+FROM orders
+WHERE product_id IN (
+	SELECT id FROM products WHERE price/weight > 50
+);
+
+SELECT name, department
+FROM products
+WHERE department NOT IN (
+	SELECT department FROM products WHERE price < 100
+);
