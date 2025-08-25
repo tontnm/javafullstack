@@ -250,10 +250,221 @@ where GioiTinh = 'Nu' and (DiemThiGiuaKy > 9 or DiemThiCuoiKy > 9);
 --MaGV (phụ trách), HoTenGV (phụ trách) của học sinh và các môn học đã có kết quả tương 
 --ứng với từng học sinh trong trường. Với điều kiện là chỉ hiển thị những môn học mà 
 --giáo viên phụ trách môn đó cũng chính là giáo viên chủ nhiệm của lớp. (***)
+select 
+	hs.MaHS,hs.HoTenHS,kq.HocKy,kq.MaMH,mh.TenMH,kq.DiemThiGiuaKy,kq.DiemThiCuoiKy,
+	l.MaLop,bm.MaGVPT
+from HOCSINH hs
+join KETQUAHOCTAP kq on kq.MaHS = hs.MaHS
+join MONHOC mh on mh.MaMH = kq.MaMH
+join LOP l on l.MaLop = hs.MaLop
+join PHUTRACHBOMON bm on bm.MaLop = l.MaLop and bm.MaGVPT = l.MaGVCN;
+
+--g.	MaMH, MaLop, HocKy của những môn học đã được thi cuối kỳ vào năm 2019
+select kq.MaMH,hs.MaLop,kq.HocKy,kq.NgayGioThiCuoiKy
+from KETQUAHOCTAP kq
+join HOCSINH hs on hs.MaHS = kq.MaHS
+where YEAR(kq.NgayGioThiCuoiKy) = '2020';
+
+--h.	MaMH, MaLop, HocKy của những môn học đã được thi vào tháng 8 năm 2019
+select kq.MaMH,hs.MaLop,kq.HocKy,kq.NgayGioThiCuoiKy
+from KETQUAHOCTAP kq
+join HOCSINH hs on hs.MaHS = kq.MaHS
+where YEAR(kq.NgayGioThiCuoiKy) = '2020' and MONTH(kq.NgayGioThiCuoiKy) = '2';
+
+update KETQUAHOCTAP
+set NgayGioThiCuoiKy = '2020-02-01 08:30:00.000'
+where MaMH='T' and MaHS = 'HS0001   ';
+update KETQUAHOCTAP
+set NgayGioThiCuoiKy = '2020-02-05 10:30:00.000'
+where MaMH='MT' and MaHS = 'HS0002   ';
+update KETQUAHOCTAP
+set NgayGioThiCuoiKy = '2020-02-10 12:30:00.000'
+where MaMH='MT' and MaHS = 'HS0005   ';
+update KETQUAHOCTAP
+set NgayGioThiCuoiKy = '2020-02-13 14:30:00.000'
+where MaMH='AN' and MaHS = 'HS0009   ';
+update KETQUAHOCTAP
+set NgayGioThiCuoiKy = '2020-02-20 16:30:00.000'
+where MaMH='KHTN' and MaHS = 'HS0010   ';
+update KETQUAHOCTAP
+set NgayGioThiCuoiKy = '2020-03-12 18:30:00.000'
+where MaMH='AN' and MaHS = 'HS0011   ';
+
+--i.	MaMH, MaLop, HocKy của những môn học đã được thi trước ngày 20 tháng 8 năm 2019
+select kq.MaMH,hs.MaLop,kq.HocKy,kq.NgayGioThiCuoiKy
+from KETQUAHOCTAP kq
+join HOCSINH hs on hs.MaHS = kq.MaHS
+where YEAR(kq.NgayGioThiCuoiKy) = '2020' and MONTH(kq.NgayGioThiCuoiKy) = '2'
+	and DAY(kq.NgayGioThiCuoiKy) < '20';
+
+--j.	MaMH, MaLop, HocKy của những môn học đã được thi trước ngày 20 tháng 8 năm 2019 đúng 1 tuần. (***)
+select kq.MaMH,hs.MaLop,kq.HocKy,kq.NgayGioThiCuoiKy
+from KETQUAHOCTAP kq
+join HOCSINH hs on hs.MaHS = kq.MaHS
+WHERE CAST(kq.NgayGioThiCuoiKy AS DATE) = DATEADD(DAY, -7, '2020-02-20');
+
+--k.	MaMH, MaLop, HocKy của những môn học đã được thi sau ngày 20 tháng 8 năm 2019 đúng 21 ngày. (***)
+select kq.MaMH,hs.MaLop,kq.HocKy,kq.NgayGioThiCuoiKy
+from KETQUAHOCTAP kq
+join HOCSINH hs on hs.MaHS = kq.MaHS
+WHERE CAST(kq.NgayGioThiCuoiKy AS DATE) = DATEADD(DAY, 21, '2020-02-20');
+
+--l.	MaMH, MaLop, HocKy của những môn học đã được thi trong khoảng từ ngày 10 đến ngày 20 tháng 8 năm 2019.
+select kq.MaMH,hs.MaLop,kq.HocKy,kq.NgayGioThiCuoiKy
+from KETQUAHOCTAP kq
+join HOCSINH hs on hs.MaHS = kq.MaHS
+WHERE kq.NgayGioThiCuoiKy between '2020-02-10' and '2020-02-20';
+
+--m.	MaMH, MaLop, HocKy của những môn học đã được thi trong khoảng từ 10 giờ 00 phút ngày 10 đến 20 giờ 30 phút ngày 20 tháng 8 năm 2019.
+select kq.MaMH,hs.MaLop,kq.HocKy,kq.NgayGioThiCuoiKy
+from KETQUAHOCTAP kq
+join HOCSINH hs on hs.MaHS = kq.MaHS
+WHERE kq.NgayGioThiCuoiKy BETWEEN '2020-02-10 10:00:00' AND '2020-02-20 20:30:00';
+
+--a.	Liệt kê những địa chỉ khác nhau trong bảng HOCSINH (bằng 2 cách khác nhau) (*)
+SELECT DISTINCT DiaChi
+FROM  HOCSINH;
+
+SELECT DiaCHi
+FROM  HOCSINH
+Group by DiaChi;
+
+--b.	Liệt kê HoTenHS, GioiTinh của các nhóm được phân nhóm theo HoTenHS và GioiTinh trong bảng HOCSINH.
+select HoTenHS, GioiTinh, count(*)
+from HOCSINH
+group by HoTenHS, GioiTinh;
+
+--c.	Liệt kê HoTenHS của các nhóm được phân nhóm theo HoTenHS và GioiTinh trong 
+--bảng HOCSINH. Chú ý thử giải thích vì sao không liệt kê GioiTinh mà vẫn không bị lỗi. (*)
+select HoTenHS, count(*) -- ko bắt buộc hiện GioiTinh ở đây
+from HOCSINH
+group by HoTenHS, GioiTinh;
+
+insert into HOCSINH (MaHS,HoTenHS,HoTenPhuHuynh,GioiTinh,DiaChi,MaLop)
+values 
+('HS0014','Nguyen Ngoc Minh','abc','Nam','abc Tan Phu','L42'),
+('HS0015','Nguyen Ngoc Minh','def','Nam','def Tan Binh','L42');
+
+--d.	Liệt kê MaMH, TenMH, DiemThiCuoiKy của từng môn học chia theo từng mức điểm thi 
+--cuối kỳ. (Gợi ý: chỉ liệt kê những môn đã từng có học sinh thi cuối kỳ). (*)
+select kq.MaMH,mh.TenMH, kq.DiemThiCuoiKy, count(*) SoLuongHS
+from KETQUAHOCTAP kq
+join MONHOC mh on mh.MaMH = kq.MaMH
+group by kq.MaMH,mh.TenMH, kq.DiemThiCuoiKy;
+
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 5
+where MaHS = 'HS0001   ' and MaMH = 'T';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 5
+where MaHS = 'HS0002   ' and MaMH = 'AV';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 5
+where MaHS = 'HS0002   ' and MaMH = 'MT';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 6
+where MaHS = 'HS0003   ' and MaMH = 'AN';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 6
+where MaHS = 'HS0003   ' and MaMH = 'KHTN';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 7
+where MaHS = 'HS0004   ' and MaMH = 'AN';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 7
+where MaHS = 'HS0004   ' and MaMH = 'KHTN';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 8
+where MaHS = 'HS0005   ' and MaMH = 'MT';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 8
+where MaHS = 'HS0006   ' and MaMH = 'T';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 9
+where MaHS = 'HS0007   ' and MaMH = 'AV';
+update KETQUAHOCTAP
+set DiemThiCuoiKy = 9
+where MaHS = 'HS0007   ' and MaMH = 'MT';
+
+--e.	Liệt kê MaGV, TenGV của những giáo viên đã từng được phân công phụ trách ít 
+--nhất 1 môn học. Nếu MaGV, TenGV trùng lặp nhiều lần thì chỉ hiển thị ra 1 lần trong 
+--kết quả trả về.
+select gv.MaGV,gv.HoTenGV,count(*) SoLanPhuTrachBoMon
+from PHUTRACHBOMON bm
+join GIAOVIEN gv on gv.MaGV = bm.MaGVPT
+group by gv.MaGV,gv.HoTenGV;
+
+insert into PHUTRACHBOMON (MaGVPT,MaLop,MaMH,HocKy)
+values ('GV002','L51','MT',2);
+
+--13
+--a.	Liệt kê HoTenHS, GioiTinh, DiaChi của các nhóm được phân nhóm theo HoTenHS và 
+--GioiTinh trong bảng HOCSINH. Thử suy nghĩ về nguyên nhân lỗi nếu có lỗi xảy ra (*)
+select HoTenHS, GioiTinh, DiaChi
+from HOCSINH
+group by HoTenHS, GioiTinh, DiaChi;
+
+--b.	Đếm số lượng học sinh là nam.
+select GioiTinh, COUNT(*) SoLuongHSNam
+from HOCSINH
+where GioiTinh = 'Nam'
+group by GioiTinh;
+
+--c.	Đếm số lượng học sinh trong lớp có tên là Lơp 1/1 và lớp đó nằm trong năm học 
+--2019-2020.
+select hs.MaLop, count(*) SoLuongHSTrongLop, l.NamHoc
+from HOCSINH hs
+join LOP l on l.MaLop = hs.MaLop
+where l.NamHoc = '2019-2020'
+group by hs.MaLop, l.NamHoc;
+
+--d.	Đếm số lớp đã phụ trách (có thể là 1 hoặc nhiều môn nào đó) của từng giáo viên.
+select MaGVPT,MaLop, count(*) SoLuongLopPhuTrach 
+from PHUTRACHBOMON
+group by MaGVPT,MaLop;
+
+--14
+--a.	Học sinh chưa từng thi môn nào.
+SELECT HOCSINH.HoTenHS 
+FROM HOCSINH WHERE NOT EXISTS 
+(SELECT  HOCSINH.HoTenHS
+FROM  KETQUAHOCTAP
+where KETQUAHOCTAP.MaHS=HOCSINH.MaHS);
+
+SELECT HOCSINH.MaHS
+FROM HOCSINH 
+WHERE MaHS NOT IN (SELECT  MaHS
+FROM  KETQUAHOCTAP);
+
+--b.	Giáo viên chưa từng phụ trách môn học nào.
+select MaGV 
+from GIAOVIEN
+where MaGV not in (
+	select MaGVPT from PHUTRACHBOMON
+);
+
+--c.	Giáo viên chưa từng chủ nhiệm lớp nào.
+select MaGV 
+from GIAOVIEN
+where MaGV not in (
+	select distinct MaGVCN from LOP where MaGVCN is not null
+);
+
+--d.	Môn học chưa từng được tổ chức thi lần nào.
+select MaMH 
+from MONHOC
+where MaMH not in (
+	select distinct MaMH
+	from KETQUAHOCTAP
+);
 
 select * from HOCSINH;
-select * from LOP;
-select * from GIAOVIEN;
-select * from MONHOC;
 select * from KETQUAHOCTAP;
+select * from MONHOC;
+select * from GIAOVIEN;
 select * from PHUTRACHBOMON;
+select * from LOP;
+
+update LOP
+set MaGVCN = 'GV001'
+where MaLop='L42';
