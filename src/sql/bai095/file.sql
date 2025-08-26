@@ -458,13 +458,164 @@ where MaMH not in (
 	from KETQUAHOCTAP
 );
 
+--e.	Đếm xem tương ứng với mỗi địa chỉ (của học sinh), số lượng học sinh đang ở mỗi 
+--địa chỉ là bao nhiêu em. Chỉ hiển thị kết quả cho những địa chỉ có ít nhất 5 học sinh 
+--đang ở đó.
+select DiaChi, count(*) SoLuongHSOMoiDiaChi
+from HOCSINH
+group by DiaChi
+having count(*) >=5;
+
+--15
+--a.	Học sinh nam ở Thanh Khê và học sinh nữ ở Hải Châu (theo 2 cách khác nhau).
+Select MaHS, HoTenHS, HoTenPhuHuynh, DiaChi, GioiTinh
+From HOCSINH
+Where (Gioitinh='Nam' and DiaChi =  'Thanh Khe')
+or (GioiTinh='Nu' and DiaChi = 'Hai Chau');
+
+(Select MaHS, HoTenHS, HoTenPhuHuynh, DiaChi, GioiTinh
+From HOCSINH
+Where (Gioitinh='Nam' and DiaChi =  'Thanh Khe'))
+UNION
+(Select MaHS, HoTenHS, HoTenPhuHuynh, DiaChi, GioiTinh
+From HOCSINH
+Where (GioiTinh='Nu' and DiaChi = 'Hai Chau'));
+
+--b.	Họ tên của học sinh và giáo viên trong toàn trường.
+SELECT HoTenHS AS ten
+FROM HOCSINH
+UNION ALL
+SELECT HoTenGV AS ten
+FROM GIAOVIEN;
+
+--c.	Họ tên, nghề nghiệp của học sinh và giáo viên trong toàn trường. 
+--(Nghề nghiệp bao gồm: học sinh hoặc giáo viên).
+SELECT HoTenHS AS ten, 'Hoc Sinh' AS NgheNghiep
+FROM HOCSINH
+UNION ALL
+SELECT HoTenGV AS ten, 'Giao Vien' AS NgheNghiep
+FROM GIAOVIEN;
+
+--d.	Những học sinh đang học ở năm học 2019-2020 và những học sinh chưa từng thi 
+--môn Toán và môn Tiếng Việt.
+select * from HOCSINH hs
+join LOP l on l.MaLop = hs.MaLop
+where l.NamHoc = '2019-2020' and hs.MaHS not in (
+	select MaHS from KETQUAHOCTAP kq where kq.MaMH in ('T','TV')
+);
+
+--16
+select month(NgayGioThiCuoiKy) thang, count(*) SoLuotThi
+from KETQUAHOCTAP
+where Year(NgayGioThiCuoiKy) = '2020' and MaMH = 'TV'
+group by month(NgayGioThiCuoiKy)
+union all
+select thang, SoLuotThi
+from
+(
+	select month(NgayGioThiCuoiKy) thang, count(*) SoLuotThi
+	from KETQUAHOCTAP
+	where Year(NgayGioThiCuoiKy) = '2020' and MaMH = 'T'
+	group by month(NgayGioThiCuoiKy)
+) AS ToanTheoThang
+where SoLuotThi >= 3;
+
+insert into KETQUAHOCTAP (MaHS,HocKy,MaMH,DiemThiGiuaKy,DiemThiCuoiKy,NgayGioThiCuoiKy) 
+values ('HS0001   ',1,'TV',1,10,'2020-02-01 13:30:00.000');
+
+--17
+--a.	MaLop, TenLop, MaGVCN, HoTenGV (chủ nhiệm) của tất cả các lớp trong trường. 
+--(Gợi ý: tất cả các lớp nghĩa là kể cả những lớp chưa được phân công GVCN).
+select l.MaLop, l.TenLop, l.MaGVCN,HoTenGV
+from LOP l
+left join GIAOVIEN gv on gv.MaGV = l.MaGVCN;
+
+--b.	MaHS, HoTenHS, HocKy, MaMH, TenMH, DiemThiGiuaKy, DiemThiCuoiKy của tất cả học 
+--sinh trong trường.
+select hs.MaHS,hs.HoTenHS,kq.HocKy,mh.MaMH,mh.TenMH,DiemThiGiuaKy,DiemThiCuoiKy
+from HOCSINH hs
+left join KETQUAHOCTAP kq on kq.MaHS = hs.MaHS
+left join MONHOC mh on mh.MaMH = kq.MaMH;
+
+--c.	MaHS, HoTenHS, MaLop, TenLop, MaGVCN, HoTenGV (Chủ nhiệm) của tất cả học sinh 
+--trong trường. (Chú ý những trường hợp: học sinh chưa được phân lớp và lớp chưa được 
+--phân GVCN).
+select hs.MaHS,hs.HoTenHS,l.MaLop,l.TenLop,l.MaGVCN,gv.HoTenGV
+from HOCSINH hs
+left join LOP l on l.MaLop = hs.MaLop
+left join GIAOVIEN gv on gv.MaGV = l.MaGVCN;
+
+--d.	MaGV, HoTenGV, MaLop, TenLop, MaMH, HocKy, TenMH của tất cả giáo viên trong trường.
+select gv.MaGV,gv.HoTenGV,l.MaLop,l.TenLop,bm.MaMH,bm.HocKy,mh.TenMH
+from GIAOVIEN gv
+left join PHUTRACHBOMON bm on bm.MaGVPT = gv.MaGV
+left join LOP l on l.MaLop = bm.MaLop
+left join MONHOC mh on mh.MaMH = bm.MaMH;
+
+--18
+--a.	MaLop, TenLop, MaGVCN, HoTenGV (chủ nhiệm) của tất cả các lớp trong trường. 
+--(Gợi ý: tất cả các lớp nghĩa là kể cả những lớp chưa được phân công GVCN).
+select l.MaLop, l.TenLop, l.MaGVCN,HoTenGV
+from GIAOVIEN gv
+right join LOP l on gv.MaGV = l.MaGVCN;
+
+--b.	MaHS, HoTenHS, HocKy, MaMH, TenMH, DiemThiGiuaKy, DiemThiCuoiKy của tất cả học 
+--sinh trong trường.
+select hs.MaHS,hs.HoTenHS,kq.HocKy,mh.MaMH,mh.TenMH,DiemThiGiuaKy,DiemThiCuoiKy
+from MONHOC mh
+right join KETQUAHOCTAP kq on kq.MaMH = mh.MaMH
+right join HOCSINH hs on hs.MaHS = kq.MaHS;
+
+--c.	MaHS, HoTenHS, MaLop, TenLop, MaGVCN, HoTenGV (Chủ nhiệm) của tất cả học sinh 
+--trong trường. (Chú ý những trường hợp: học sinh chưa được phân lớp và lớp chưa được 
+--phân GVCN).
+select hs.MaHS,hs.HoTenHS,l.MaLop,l.TenLop,l.MaGVCN,gv.HoTenGV
+from HOCSINH hs
+left join LOP l on l.MaLop = hs.MaLop
+left join GIAOVIEN gv on gv.MaGV = l.MaGVCN;
+
+--d.	MaGV, HoTenGV, MaLop, TenLop, MaMH, HocKy, TenMH của tất cả giáo viên trong trường.
+SELECT gv.MaGV, gv.HoTenGV,
+       l.MaLop, l.TenLop,
+       bm.MaMH, bm.HocKy,
+       mh.TenMH
+FROM PHUTRACHBOMON bm
+RIGHT JOIN GIAOVIEN gv ON bm.MaGVPT = gv.MaGV
+LEFT JOIN LOP l ON l.MaLop = bm.MaLop
+LEFT JOIN MONHOC mh ON mh.MaMH = bm.MaMH; 
+
+--19
+--a.	MaHS, HoTenHS, MaLop, TenLop của tất cả học sinh và tất cả các lớp trong trường. 
+--(Gợi ý: lớp chưa có học sinh và học sinh chưa được phân lớp đều phải được trả về kết quả).
+select hs.MaHS,hs.HoTenHS,l.MaLop,l.TenLop
+from HOCSINH hs
+full join LOP l on l.MaLop = hs.MaLop;
+
+--b.	MaMH, TenMH, MaGV (phụ trách), HoTenGV (phụ trách) của tất cả những môn học và 
+--tất cả giáo viên trong trường. Kết quả trả về cần loại bỏ bớt những dòng trùng lặp 
+--(những dòng nào trùng nhau thì chỉ hiển thị kết quả 1 lần).
+select distinct mh.MaMH,mh.TenMH, gv.MaGV, gv.HoTenGV 
+from PHUTRACHBOMON bm
+full join MONHOC mh on mh.MaMH = bm.MaMH
+full join GIAOVIEN gv on gv.MaGV = bm.MaGVPT
+order by gv.MaGV;
+
+
 select * from HOCSINH;
 select * from KETQUAHOCTAP;
-select * from MONHOC;
 select * from GIAOVIEN;
 select * from PHUTRACHBOMON;
 select * from LOP;
+select * from MONHOC;
 
 update LOP
 set MaGVCN = 'GV001'
 where MaLop='L42';
+
+update HOCSINH
+set DiaChi = 'Thanh Khe'
+where MaHS in ('HS0003   ');
+
+update HOCSINH
+set DiaChi = 'Hai Chau'
+where MaHS in ('HS0002   ','HS0004   ','HS0006   ','HS0008   ','HS0010   ');
