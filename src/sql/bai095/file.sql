@@ -600,13 +600,110 @@ full join MONHOC mh on mh.MaMH = bm.MaMH
 full join GIAOVIEN gv on gv.MaGV = bm.MaGVPT
 order by gv.MaGV;
 
+--20
+--a.	MaGV, HoTenGV của những giáo viên đã từng làm chủ nhiệm lớp và từng dạy môn Âm nhạc.
+(SELECT MaGV, HoTenGV
+FROM GIAOVIEN
+inner join LOP
+on LOP.MaGVCN=GIAOVIEN.MaGV)
+intersect
+(SELECT MaGV, HoTenGV 
+FROM GIAOVIEN GV
+INNER JOIN PHUTRACHBOMON PTBM
+On GV.MaGV = PTBM.MaGVPT
+Where MaMH='AN')
 
+--b.	MaHS, TenHS của những học sinh đã từng thi môn Toán trong học kỳ 1 và đã từng 
+--thi môn Âm nhạc trong học kỳ 2.
+(
+	select hs.MaHS, hs.HoTenHS
+	from HOCSINH hs
+	join KETQUAHOCTAP kq on kq.MaHS = hs.MaHS
+	where kq.MaMH = 'T' and kq.HocKy = '1'
+)
+intersect
+(
+	select hs.MaHS, hs.HoTenHS
+	from HOCSINH hs
+	join KETQUAHOCTAP kq on kq.MaHS = hs.MaHS
+	where kq.MaMH = 'T' and kq.HocKy = '2'
+);
+
+--c.	MaMH, TenMH của những môn học đã từng được ít nhất 5 học sinh thi cuối kỳ và 
+--đã từng được ít nhất 2 giáo viên phụ trách giảng dạy.
+(
+	select kq.MaMH,mh.TenMH
+	from KETQUAHOCTAP kq
+	join MONHOC mh on mh.MaMH = kq.MaMH
+	group by kq.MaMH,mh.TenMH
+	having count(*) >= 4
+)
+intersect
+(
+	select bm.MaMH,mh.TenMH
+	from PHUTRACHBOMON bm
+	join MONHOC mh on mh.MaMH = bm.MaMH
+	group by bm.MaGVPT,bm.MaMH,mh.TenMH
+	having count(*) >= 2
+);
+
+--21
+--a.	MaGV, HoTenGV của những giáo viên đã từng làm chủ nhiệm lớp và từng dạy môn Âm nhạc.
+(SELECT MaGV, HoTenGV
+FROM GIAOVIEN
+inner join LOP
+on LOP.MaGVCN=GIAOVIEN.MaGV)
+except
+(SELECT MaGV, HoTenGV 
+FROM GIAOVIEN GV
+INNER JOIN PHUTRACHBOMON PTBM
+On GV.MaGV = PTBM.MaGVPT
+Where MaMH='AN')
+
+--b.	MaHS, TenHS của những học sinh đã từng thi môn Toán trong học kỳ 1 và đã từng 
+--thi môn Âm nhạc trong học kỳ 2.
+(
+	select hs.MaHS, hs.HoTenHS
+	from HOCSINH hs
+	join KETQUAHOCTAP kq on kq.MaHS = hs.MaHS
+	where kq.MaMH = 'T' and kq.HocKy = '1'
+)
+except
+(
+	select hs.MaHS, hs.HoTenHS
+	from HOCSINH hs
+	join KETQUAHOCTAP kq on kq.MaHS = hs.MaHS
+	where kq.MaMH = 'T' and kq.HocKy = '2'
+);
+
+--c.	MaMH, TenMH của những môn học đã từng được ít nhất 5 học sinh thi cuối kỳ và 
+--đã từng được ít nhất 2 giáo viên phụ trách giảng dạy.
+(
+	select kq.MaMH,mh.TenMH
+	from KETQUAHOCTAP kq
+	join MONHOC mh on mh.MaMH = kq.MaMH
+	group by kq.MaMH,mh.TenMH
+	having count(*) >= 4
+)
+except
+(
+	select bm.MaMH,mh.TenMH
+	from PHUTRACHBOMON bm
+	join MONHOC mh on mh.MaMH = bm.MaMH
+	group by bm.MaGVPT,bm.MaMH,mh.TenMH
+	having count(*) >= 2
+);
+
+-----------------------------------------------------------------------------------
 select * from HOCSINH;
 select * from KETQUAHOCTAP;
 select * from GIAOVIEN;
 select * from PHUTRACHBOMON;
 select * from LOP;
 select * from MONHOC;
+
+insert into KETQUAHOCTAP (MaHS,HocKy,MaMH,DiemThiGiuaKy,DiemThiCuoiKy,NgayGioThiCuoiKy)
+values ('HS0012   ','2','T','5','5','2020-12-08 14:30:00.000');
 
 update LOP
 set MaGVCN = 'GV001'
